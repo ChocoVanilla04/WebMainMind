@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>KOMIK — MAIN MIND</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:#000;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+body{background:#000;color:#fff;font-family:'Space Mono',monospace;overflow-x:hidden}
+@media(hover:hover) and (pointer:fine){body{cursor:none}}
+::selection{background:#6DCEF5;color:#000}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 3px)}
+#ascii{position:fixed;inset:0;z-index:0;font-size:9px;line-height:1.45;color:rgba(109,206,245,.025);overflow:hidden;pointer-events:none;letter-spacing:.05em;padding:8px;white-space:pre-wrap;word-break:break-all}
+#cur{position:fixed;pointer-events:none;z-index:9998;width:32px;height:18px;border:1px solid #6DCEF5;border-radius:50%;transform:translate(-50%,-50%) rotate(-30deg)}
+#cur-dot{position:fixed;pointer-events:none;z-index:9999;width:3px;height:3px;background:#6DCEF5;border-radius:50%;transform:translate(-50%,-50%)}
+@media(hover:none),(pointer:coarse){#cur,#cur-dot{display:none}}
+
+/* TOPBAR */
+#tb{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:52px;border-bottom:1px solid #111;background:rgba(0,0,0,.92)}
+@supports(padding:max(0px)){#tb{padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right))}}
+.tb-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:.14em;color:#fff;text-decoration:none}
+.tb-name span{color:#6DCEF5}
+.tb-nav a{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;color:rgba(255,255,255,.65);text-decoration:none;padding:8px 0;border-bottom:1px solid transparent;transition:color .15s,border-color .15s}
+.tb-nav a:hover,.tb-nav a:focus-visible,.tb-nav a.on{color:#6DCEF5;border-color:#6DCEF5;outline:none}
+.tb-nav a+a{margin-left:20px}
+
+/* HERO */
+main{position:relative;z-index:2;min-height:100vh;min-height:100svh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;align-items:center;max-width:1280px;margin:0 auto;padding:110px 32px 80px}
+@supports(padding:max(0px)){main{padding-left:max(32px,env(safe-area-inset-left));padding-right:max(32px,env(safe-area-inset-right))}}
+.badge{font-size:13px;letter-spacing:.12em;color:#6DCEF5;margin-bottom:18px}
+h1{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:clamp(56px,8.5vw,128px);line-height:.92;letter-spacing:.01em;text-transform:uppercase;transform:skewX(-8deg);transform-origin:left bottom;margin-bottom:28px;text-shadow:3px 3px 0 rgba(109,206,245,.35)}
+.desc{max-width:52ch;font-size:14px;line-height:1.75;color:rgba(255,255,255,.82);margin-bottom:36px}
+.btns{display:flex;flex-wrap:wrap;gap:20px}
+.btn{font-family:'Space Mono',monospace;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:15px 24px;transition:transform .15s,box-shadow .15s,background .15s,color .15s}
+.btn-main{color:#000;background:#6DCEF5;background-image:radial-gradient(rgba(0,0,0,.28) 1px,transparent 1.4px);background-size:4px 4px;box-shadow:5px 5px 0 #fff}
+.btn-main:hover,.btn-main:focus-visible{transform:translate(-2px,-2px);box-shadow:7px 7px 0 #fff;outline:none}
+.btn-alt{color:#6DCEF5;border:1px solid #6DCEF5}
+.btn-alt:hover,.btn-alt:focus-visible{background:#6DCEF5;color:#000;outline:none}
+
+/* COVER */
+.stage{position:relative;justify-self:center;width:min(100%,520px)}
+.frame{position:relative;aspect-ratio:4/5;border:1px solid rgba(109,206,245,.3);background:#050505;overflow:hidden}
+.frame img{width:100%;height:100%;object-fit:cover;display:block}
+.frame.empty{display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:clamp(160px,22vw,260px);color:transparent;-webkit-text-stroke:1px rgba(109,206,245,.5)}
+
+@media(max-width:860px){
+  #tb{padding:0 16px}
+  main{grid-template-columns:1fr;gap:56px;padding:90px 20px 70px;align-items:start}
+}
+</style>
+</head>
+<body>
+<div id="ascii"></div>
+<div id="cur"></div>
+<div id="cur-dot"></div>
+
+<div id="tb">
+  <a class="tb-name" href="index.html">MAIN<span>.</span>MIND</a>
+  <nav class="tb-nav"><a href="index.html">HOME</a><a href="komik.html" class="on" aria-current="page">KOMIK</a></nav>
+</div>
+
+<main>
+  <section>
+    <p class="badge" id="c-badge"></p>
+    <h1 id="c-title"></h1>
+    <p class="desc" id="c-desc"></p>
+    <div class="btns">
+      <a class="btn btn-main" id="c-read" href="#"></a>
+      <a class="btn btn-alt" id="c-alt" href="#"></a>
+    </div>
+  </section>
+
+  <div class="stage">
+    <div class="frame" id="c-frame"></div>
+  </div>
+</main>
+
+<script>
+/* ===== ISI DATA KOMIK DI SINI ===== */
+var COMIC={
+  badge:'Baru rilis!',
+  title:'Judul Komik',
+  desc:'Tulis sinopsis singkat komik kamu di sini. Dua sampai tiga kalimat sudah cukup supaya pembaca tahu ceritanya tentang apa.',
+  cover:'',                       /* contoh: 'covers/judul-komik.jpg' */
+  readLabel:'Baca sekarang', readHref:'#',
+  altLabel:'Lihat awal ceritanya', altHref:'#'
+};
+/* =================================== */
+
+function $(id){return document.getElementById(id)}
+$('c-badge').textContent=COMIC.badge;
+$('c-title').textContent=COMIC.title;
+$('c-desc').textContent=COMIC.desc;
+$('c-read').textContent=COMIC.readLabel;$('c-read').href=COMIC.readHref;
+$('c-alt').textContent=COMIC.altLabel;$('c-alt').href=COMIC.altHref;
+document.title=COMIC.title+' — MAIN MIND';
+var fr=$('c-frame');
+if(COMIC.cover){var im=document.createElement('img');im.src=COMIC.cover;im.alt='Cover '+COMIC.title;fr.appendChild(im);}
+else{fr.className+=' empty';fr.textContent='?';}
+
+var IS_TOUCH=!window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+var asciiEl=$('ascii'),words=['?','MAIN','MIND','1895','ANTI','VOID','CUT','REEL','RAW'];
+function buildAscii(){
+  var cols=Math.floor(innerWidth/7),rows=Math.floor(innerHeight/13),out='';
+  for(var r=0;r<rows;r++){for(var c=0;c<cols;c++){var n=Math.random();
+    if(n>.994)out+=words[Math.floor(Math.random()*words.length)].charAt(0);
+    else if(n>.988)out+=String(Math.floor(Math.random()*9));
+    else if(n>.975)out+='.';else out+=' ';}out+='\n';}
+  asciiEl.textContent=out;
+}
+buildAscii();setInterval(buildAscii,IS_TOUCH?3500:2000);addEventListener('resize',buildAscii);
+
+if(!IS_TOUCH){
+  var cur=$('cur'),dot=$('cur-dot'),cx=0,cy=0,rx=0,ry=0;
+  document.addEventListener('mousemove',function(e){cx=e.clientX;cy=e.clientY;dot.style.left=cx+'px';dot.style.top=cy+'px';});
+  (function anim(){rx+=(cx-rx)*.13;ry+=(cy-ry)*.13;cur.style.left=rx+'px';cur.style.top=ry+'px';requestAnimationFrame(anim);})();
+}
+</script>
+</body>
+</html>
